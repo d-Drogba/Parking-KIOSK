@@ -6,7 +6,7 @@ require('lib/db_config.php');
     $floor = '';
 
     while($row = mysqli_fetch_array($result)){
-        $escaped_floor_number = htmlspecialchars($row['floor_number']);
+        $escaped_floor_id = htmlspecialchars($row['floor_id']);
         $escaped_floor_status = htmlspecialchars($row['floor_status']);
         $escaped_current_parked_count = htmlspecialchars($row['current_parked_count']);
         $escaped_max_parking_capacity = htmlspecialchars($row['max_parking_capacity']);
@@ -18,7 +18,7 @@ require('lib/db_config.php');
         }
 
         $floor = $floor."<li>
-        <a href=\"print_slot.php?floor_id={$row['floor_id']}\">{$escaped_floor_number}층</a>
+        <a href=\"print_slot.php?floor_id={$escaped_floor_id}\">{$escaped_floor_id}층</a>
          ({$escaped_current_parked_count}/{$escaped_max_parking_capacity}) {$floor_status}</li>";
     }
 ?>

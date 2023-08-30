@@ -23,20 +23,22 @@ require('lib/func.php');
 
     // parkingslot_id 출력
     $sql = 
-        "   SELECT  r.parkingslot_id
+        "   SELECT  r.floor_id, r.slot_id
             FROM    reservation AS r
             JOIN    customer ON r.customer_id = customer.customer_id
             WHERE   r.customer_id = {$customer_id}
         ";
 
     $row = result_array($conn, $sql);
-    $parkingslot_id = $row['parkingslot_id'];
+    $floor_id = $row['floor_id'];
+    $slot_id = $row['slot_id'];
 
     // hourly_rate 출력
     $sql = 
-        "   SELECT hourly_rate
-            FROM parkingslot
-            WHERE parkingslot_id = {$parkingslot_id}
+        "   SELECT  hourly_rate
+            FROM    slot
+            WHERE   floor_id = {$floor_id}
+            AND     slot_id = {$slot_id}
         ";
 
     $row = result_array($conn, $sql);
@@ -47,12 +49,13 @@ require('lib/func.php');
     if($result === false) {
         echo '정산하는 과정에서 문제가 생겼습니다. 관리자에 문의해주세요.<br>';
         error_log(mysqli_error($conn));
-        echo "<a href = 'index.html'>홈으로</a>";
+        echo "<a href = 'index.php'>홈으로</a>";
     } else {
         session_start();
         $_SESSION['car_number'] = $filtered['car_number'];
         $_SESSION['parking_info'] = $parking_info;
-        $_SESSION['parkingslot_id'] = $parkingslot_id;
+        $_SESSION['floor_id'] = $floor_id;
+        $_SESSION['slot_id'] = $slot_id;
 
         header("Location: process_exit.php");
     }
