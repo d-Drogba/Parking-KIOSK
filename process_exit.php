@@ -15,16 +15,6 @@ require('lib/db_config.php');
     mysqli_query($conn, $sql);
 
     $sql = 
-        "   SELECT  floor.floor_id
-            FROM    slot
-            JOIN    floor ON slot.floor_id = floor.floor_id
-            WHERE   floor_id = $floor_id
-            AND     slot_id = $slot_id
-        ";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($result);
-
-    $sql = 
     "   UPDATE floor
         SET current_parked_count = current_parked_count - 1,
             floor_status = 
@@ -32,7 +22,7 @@ require('lib/db_config.php');
                 WHEN current_parked_count < max_parking_capacity THEN 'Y'
                 ELSE 'N'
             END
-        WHERE floor_id = {$row['floor_id']};
+        WHERE floor_id = $floor_id;
     ";
     mysqli_query($conn, $sql);
 
