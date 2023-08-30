@@ -1,9 +1,6 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>주차 키오스크</title>
-    </head>
+<?php 
+require('view/top.php');
+?>
     <body>
         <h1>고객 등록</h1>
         <form action="process_register.php" method="POST">
